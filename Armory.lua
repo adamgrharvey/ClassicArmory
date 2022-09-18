@@ -137,14 +137,17 @@ end
 
 function Armory.OnClick(self, aButton)
 	if (aButton == "RightButton") then
-		print("show menu here!");
+		message(GetItemInfo(GetInventoryItemLink("player",1)));
+		
 	end
 end
 
 function Armory.UpdateFrame()
 
 	-- update the main frame state here
-	Armory.Label:SetText(string.format("%d", GetTime()));
+	local a, itemLink, c = GetItemInfo(GetInventoryItemLink("player",1))
+	local itemString = string.match(itemLink, "item[%-?%d:]+")
+	Armory.Label:SetText(itemString);
 end
 
 
