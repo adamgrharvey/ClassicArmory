@@ -4,6 +4,6 @@
 ## Author: Adam Harvey (Subspace-Faerlina)
 ## Version: 1.0
 ## Dependencies: 
-## SavedVariablesPerCharacter: ArmoryPrefs
+## SavedVariables: ArmoryPrefs
 
 Armory.lua
