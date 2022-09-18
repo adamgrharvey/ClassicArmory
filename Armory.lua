@@ -1,6 +1,15 @@
--- test
 Armory = {};
 Armory.fully_loaded = false;
+local temp = 1
+local GetUpdate = false;
+local Character = {}
+function Character.new(name, realm)
+	local self = {}
+	self.name = name
+	self.realm = realm
+
+	return self
+end
 Armory.default_options = {
 
 	-- main frame position
@@ -27,6 +36,7 @@ function Armory.OnReady()
 	end
 
 	Armory.CreateUIFrame();
+	
 end
 
 function Armory.OnSaving()
@@ -137,8 +147,7 @@ end
 
 function Armory.OnClick(self, aButton)
 	if (aButton == "RightButton") then
-		local a, itemLink, c = GetItemInfo(GetInventoryItemLink("player",5))
-		print(string.match(itemLink, "item[%-?%d:]+"))
+		GetUpdate = true;
 		
 	end
 end
@@ -146,12 +155,38 @@ end
 function Armory.UpdateFrame()
 
 	-- update the main frame state here
-	local a, itemLink, c = GetItemInfo(GetInventoryItemLink("player",5))
-	local itemString = string.match(itemLink, "item[%-?%d:]+")
-	itemString = string.gsub(itemString, "::", ":0:")
-	itemString = string.gsub(itemString, "::", ":0:")
-	Armory.Label:SetText(itemString);
+
+	if (GetUpdate == true) then
+		temp = temp + 1
+		GetUpdate = false
+		if (temp > 19) then
+			temp = 1
+		end
+		print(temp);
+		Armory.GetCharData()
+	end
+	
+	Armory.Label:SetText(GetItemInfo(GetInventoryItemLink("player", 1)));
 end
+
+function Armory.GetCharData()
+	local CharacterName = UnitName("player");
+	local CharacterRealm = GetRealmName();
+	local charUnique = CharacterName.."-"..CharacterRealm;
+	_G.ArmoryPrefs[charUnique] = Character.new(CharacterName, CharacterRealm);
+	for i = 1, 19, 1 do
+		if (GetInventoryItemLink("player", i)) then
+			local a, itemLink = GetItemInfo(GetInventoryItemLink("player", i))
+			local itemString = string.match(itemLink, "item[%-?%d:]+")
+			itemString = string.gsub(itemString, "::", ":0:")
+			itemString = string.gsub(itemString, "::", ":0:")
+			_G.ArmoryPrefs[charUnique][i] = itemString
+		else
+			_G.ArmoryPrefs[charUnique][i] = nil;
+		end
+	end
+end
+
 
 
 Armory.EventFrame = CreateFrame("Frame");
