@@ -10,6 +10,18 @@ function Character.new(name, realm, region)
 
 	return self
 end
+local Statistics = {}
+function Statistics.new()
+	local self = {}
+	self[363] = 0
+	self[366] = 0 
+	self[365] = 0 
+	self[364] = 0 
+	self[363] = 0 
+	self[362] = 0
+
+	return self
+end
 Armory.default_options = {
 
 	-- main frame position
@@ -182,6 +194,22 @@ function Armory.GetCharData()
 			_G.ArmoryPrefs[charUnique][i] = nil;
 		end
 	end
+_G.ArmoryPrefs[charUnique].Statistics = Armory.GetStatisticData();
+end
+
+function Armory.GetStatisticData()
+	-- 2v2 matches 	363
+	-- 2v2 wins 		366
+	-- 3v3 matches 	365
+	-- 3v3 wins			364
+	-- 5v5 matches 	363
+	-- 5v5 wins			362
+	local Statistics = Statistics.new()
+
+	for i in pairs(Statistics) do 
+		Statistics[i] = GetStatistic(i)
+	end
+	return Statistics
 end
 
 
