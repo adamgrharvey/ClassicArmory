@@ -1,12 +1,12 @@
 Armory = {};
 Armory.fully_loaded = false;
-local temp = 1
-local GetUpdate = false;
+local GetUpdate = true;
 local Character = {}
-function Character.new(name, realm)
+function Character.new(name, realm, region)
 	local self = {}
 	self.name = name
 	self.realm = realm
+	self.region = region
 
 	return self
 end
@@ -157,12 +157,7 @@ function Armory.UpdateFrame()
 	-- update the main frame state here
 
 	if (GetUpdate == true) then
-		temp = temp + 1
 		GetUpdate = false
-		if (temp > 19) then
-			temp = 1
-		end
-		print(temp);
 		Armory.GetCharData()
 	end
 	
@@ -172,8 +167,10 @@ end
 function Armory.GetCharData()
 	local CharacterName = UnitName("player");
 	local CharacterRealm = GetRealmName();
+	local region = GetLocale();
+	region = string.sub(region,3,5)
 	local charUnique = CharacterName.."-"..CharacterRealm;
-	_G.ArmoryPrefs[charUnique] = Character.new(CharacterName, CharacterRealm);
+	_G.ArmoryPrefs[charUnique] = Character.new(CharacterName, CharacterRealm, region);
 	for i = 1, 19, 1 do
 		if (GetInventoryItemLink("player", i)) then
 			local a, itemLink = GetItemInfo(GetInventoryItemLink("player", i))
