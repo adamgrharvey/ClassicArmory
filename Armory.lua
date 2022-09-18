@@ -137,7 +137,8 @@ end
 
 function Armory.OnClick(self, aButton)
 	if (aButton == "RightButton") then
-		message(GetItemInfo(GetInventoryItemLink("player",1)));
+		local a, itemLink, c = GetItemInfo(GetInventoryItemLink("player",5))
+		print(string.match(itemLink, "item[%-?%d:]+"))
 		
 	end
 end
@@ -145,8 +146,10 @@ end
 function Armory.UpdateFrame()
 
 	-- update the main frame state here
-	local a, itemLink, c = GetItemInfo(GetInventoryItemLink("player",1))
+	local a, itemLink, c = GetItemInfo(GetInventoryItemLink("player",5))
 	local itemString = string.match(itemLink, "item[%-?%d:]+")
+	itemString = string.gsub(itemString, "::", ":0:")
+	itemString = string.gsub(itemString, "::", ":0:")
 	Armory.Label:SetText(itemString);
 end
 
