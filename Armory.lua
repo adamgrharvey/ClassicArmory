@@ -2,11 +2,12 @@ Armory = {};
 Armory.fully_loaded = false;
 local GetUpdate = true;
 local Character = {}
-function Character.new(name, realm, region)
+function Character.new(name, realm, region, classIndex)
 	local self = {}
 	self.name = name
 	self.realm = realm
 	self.region = region
+	self.classIndex = classIndex
 
 	return self
 end
@@ -180,9 +181,10 @@ function Armory.GetCharData()
 	local CharacterName = UnitName("player");
 	local CharacterRealm = GetRealmName();
 	local region = GetLocale();
+	local localizedClass, englishClass, classIndex = UnitClass("unit");
 	region = string.sub(region,3,5)
 	local charUnique = CharacterName.."-"..CharacterRealm;
-	_G.ArmoryPrefs[charUnique] = Character.new(CharacterName, CharacterRealm, region);
+	_G.ArmoryPrefs[charUnique] = Character.new(CharacterName, CharacterRealm, region, classIndex);
 	for i = 1, 19, 1 do
 		if (GetInventoryItemLink("player", i)) then
 			local a, itemLink = GetItemInfo(GetInventoryItemLink("player", i))
