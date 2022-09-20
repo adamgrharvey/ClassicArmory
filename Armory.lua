@@ -181,7 +181,7 @@ function Armory.GetCharData()
 	local CharacterName = UnitName("player");
 	local CharacterRealm = GetRealmName();
 	local region = GetLocale();
-	local localizedClass, englishClass, classIndex = UnitClass("unit");
+	local localizedClass, englishClass, classIndex = UnitClass("player");
 	region = string.sub(region,3,5)
 	local charUnique = CharacterName.."-"..CharacterRealm;
 	_G.ArmoryPrefs[charUnique] = Character.new(CharacterName, CharacterRealm, region, classIndex);
