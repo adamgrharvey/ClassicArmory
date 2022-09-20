@@ -14,12 +14,12 @@ end
 local Statistics = {}
 function Statistics.new()
 	local self = {}
-	self[363] = {Value = 0, Name, Points, Completed, Month, Day, Year, Description, Flags, RewardText}
-	self[366] = {Value = 0, Name, Points, Completed, Month, Day, Year, Description, Flags, RewardText}
-	self[365] = {Value = 0, Name, Points, Completed, Month, Day, Year, Description, Flags, RewardText}
-	self[364] = {Value = 0, Name, Points, Completed, Month, Day, Year, Description, Flags, RewardText}
-	self[363] = {Value = 0, Name, Points, Completed, Month, Day, Year, Description, Flags, RewardText}
-	self[362] = {Value = 0, Name, Points, Completed, Month, Day, Year, Description, Flags, RewardText}
+	self[363] = {}
+	self[366] = {}
+	self[365] = {}
+	self[364] = {}
+	self[363] = {}
+	self[362] = {}
 
 	return self
 end
@@ -219,7 +219,7 @@ function Armory.GetStatisticData()
 		Statistics[i].Month = Month
 		Statistics[i].Day = Day
 		Statistics[i].Year = Year
-		Statistics[i].Flags = Flags
+		Statistics[i].Flags = string.format(Flags, 0xaf)
 		Statistics[i].RewardText = RewardText
 	end
 	return Statistics
