@@ -14,12 +14,12 @@ end
 local Statistics = {}
 function Statistics.new()
 	local self = {}
-	self[363] = 0
-	self[366] = 0 
-	self[365] = 0 
-	self[364] = 0 
-	self[363] = 0 
-	self[362] = 0
+	self[363] = {Value = 0, Name, Points, Completed, Month, Day, Year, Description, Flags, RewardText}
+	self[366] = {Value = 0, Name, Points, Completed, Month, Day, Year, Description, Flags, RewardText}
+	self[365] = {Value = 0, Name, Points, Completed, Month, Day, Year, Description, Flags, RewardText}
+	self[364] = {Value = 0, Name, Points, Completed, Month, Day, Year, Description, Flags, RewardText}
+	self[363] = {Value = 0, Name, Points, Completed, Month, Day, Year, Description, Flags, RewardText}
+	self[362] = {Value = 0, Name, Points, Completed, Month, Day, Year, Description, Flags, RewardText}
 
 	return self
 end
@@ -197,6 +197,7 @@ function Armory.GetCharData()
 		end
 	end
 _G.ArmoryPrefs[charUnique].Statistics = Armory.GetStatisticData();
+_G.ArmoryPrefs[charUnique].RecentStats = GetLatestUpdatedStats()
 end
 
 function Armory.GetStatisticData()
@@ -209,7 +210,16 @@ function Armory.GetStatisticData()
 	local Statistics = Statistics.new()
 
 	for i in pairs(Statistics) do 
-		Statistics[i] = GetStatistic(i)
+		IDNumber, Name, Points, Completed, Month, Day, Year, Description, Flags, Image, RewardText, isGuildAch = GetAchievementInfo(i)
+		Statistics[i].Value = GetStatistic(i)
+		Statistics[i].Name = Name
+		Statistics[i].Points = Points
+		Statistics[i].Completed = Completed
+		Statistics[i].Month = Month
+		Statistics[i].Day = Day
+		Statistics[i].Year = Year
+		Statistics[i].Flags = Flags
+		Statistics[i].RewardText = RewardText
 	end
 	return Statistics
 end
