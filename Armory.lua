@@ -197,8 +197,8 @@ function Armory.GetCharData()
 		end
 	end
 _G.ArmoryPrefs[charUnique].Statistics = Armory.GetStatisticData();
-_G.ArmoryPrefs[charUnique].RecentStats = GetLatestUpdatedStats()
-_G.ArmoryPrefs[charUnique].RecentAchieves = GetLatestCompletedAchievements()
+_G.ArmoryPrefs[charUnique].RecentStats = { GetLatestUpdatedStats() }
+_G.ArmoryPrefs[charUnique].RecentAchieves = { GetLatestCompletedAchievements() }
 end
 
 function Armory.GetStatisticData()
