@@ -201,6 +201,36 @@ function Armory.GetCharData()
 _G.ArmoryPrefs[charUnique].Statistics = Armory.GetStatisticData();
 _G.ArmoryPrefs[charUnique].RecentStats = { GetLatestUpdatedStats() }
 _G.ArmoryPrefs[charUnique].RecentAchieves = { GetLatestCompletedAchievements() }
+_G.ArmoryPrefs[charUnique].Specialization = {Primary = "", Secondary = ""}
+_G.ArmoryPrefs[charUnique].Talents = {"tab1", "tab2", "tab3"}
+_G.ArmoryPrefs[charUnique].Talents["tab1"] = {ID = 1}
+_G.ArmoryPrefs[charUnique].Talents["tab2"] = {ID = 2}
+_G.ArmoryPrefs[charUnique].Talents["tab3"] = {ID = 3}
+_G.ArmoryPrefs[charUnique].Talents["tab1"].Count = GetNumTalents(1)
+_G.ArmoryPrefs[charUnique].Talents["tab2"].Count = GetNumTalents(2)
+_G.ArmoryPrefs[charUnique].Talents["tab3"].Count = GetNumTalents(3)
+print(GetTalentInfo(1,1,false,false,1))
+print(GetTalentInfo(1,1,false,false,2))
+
+end
+
+function Armory.GetTalentTree(NumTalents)
+	local talentString = "";
+	local tabs = {"tab1", "tab2", "tab3"}
+	for i = 1, 3 do
+		for j = 1, NumTalents do
+		
+		end
+	end
+
+end
+
+function Armory.IsDualSpec()
+	if (GetNumTalentGroups() > 1) then
+		return true
+	 else 
+		return false
+	 end
 end
 
 function Armory.GetStatisticData()
