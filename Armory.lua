@@ -209,8 +209,23 @@ _G.ArmoryPrefs[charUnique].Talents["tab3"] = {ID = 3}
 _G.ArmoryPrefs[charUnique].Talents["tab1"].Count = GetNumTalents(1)
 _G.ArmoryPrefs[charUnique].Talents["tab2"].Count = GetNumTalents(2)
 _G.ArmoryPrefs[charUnique].Talents["tab3"].Count = GetNumTalents(3)
-print(GetTalentInfo(1,1,false,false,1))
-print(GetTalentInfo(1,1,false,false,2))
+local numTabs = GetNumTalentTabs();
+
+for s=1, 2 do
+	for t=1, numTabs do
+    local numTalents = GetNumTalents(t);
+    for i=1, numTalents do
+        nameTalent, icon, tier, column, currRank, maxRank = GetTalentInfo(t,i,false,false,s);
+				if s == 1 then
+					_G.ArmoryPrefs[char4Unique].Specialization.Primary = _G.ArmoryPrefs[charUnique].Specialization.Primary..currRank;
+				else 
+					_G.ArmoryPrefs[charUnique].Specialization.Secondary = _G.ArmoryPrefs[charUnique].Specialization.Secondary..currRank;
+				end
+        
+    end
+	end
+end
+
 
 end
 
