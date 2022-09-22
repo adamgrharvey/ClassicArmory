@@ -174,6 +174,7 @@ function Armory.UpdateFrame()
 	if (GetUpdate == true) then
 		GetUpdate = false
 		Armory.GetCharData()
+		print('update')
 	end
 	
 	Armory.Label:SetText(GetItemInfo(GetInventoryItemLink("player", 1)));
@@ -217,7 +218,7 @@ for s=1, 2 do
     for i=1, numTalents do
         nameTalent, icon, tier, column, currRank, maxRank = GetTalentInfo(t,i,false,false,s);
 				if s == 1 then
-					_G.ArmoryPrefs[char4Unique].Specialization.Primary = _G.ArmoryPrefs[charUnique].Specialization.Primary..currRank;
+					_G.ArmoryPrefs[charUnique].Specialization.Primary = _G.ArmoryPrefs[charUnique].Specialization.Primary..currRank;
 				else 
 					_G.ArmoryPrefs[charUnique].Specialization.Secondary = _G.ArmoryPrefs[charUnique].Specialization.Secondary..currRank;
 				end
