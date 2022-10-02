@@ -188,7 +188,7 @@ function Armory.GetCharData()
 	region = string.sub(region,3,5)
 	local charUnique = CharacterName.."-"..CharacterRealm;
 	_G.ArmoryPrefs[charUnique] = Character.new(CharacterName, CharacterRealm, region, classIndex);
-	for i = 1, 19, 1 do
+	for i = 0, 19, 1 do
 		if (GetInventoryItemLink("player", i)) then
 			local a, itemLink = GetItemInfo(GetInventoryItemLink("player", i))
 			local itemString = string.match(itemLink, "item[%-?%d:]+")
