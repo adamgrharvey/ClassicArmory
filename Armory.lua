@@ -301,6 +301,8 @@ function Armory.GetCharData()
 	local CharacterName = UnitName("player");
 	local CharacterRealm = GetRealmName();
 	local region = GetLocale();
+	local itemString = ""
+	CharacterString = ""
 	local localizedClass, englishClass, classIndex = UnitClass("player");
 	region = string.sub(region,3,5)
 	local charUnique = CharacterName.."-"..CharacterRealm;
@@ -308,18 +310,20 @@ function Armory.GetCharData()
 	for i = 0, 19, 1 do
 		if (GetInventoryItemLink("player", i)) then
 			local a, itemLink = GetItemInfo(GetInventoryItemLink("player", i))
-			local itemString = string.match(itemLink, "item[%-?%d:]+")
+			itemString = string.match(itemLink, "item[%-?%d:]+")
 			itemString = string.gsub(itemString, "::", ":0:")
 			itemString = string.gsub(itemString, "::", ":0:")
 			itemString = string.sub(itemString,6,-1)
 			_G.ArmoryPrefs[charUnique].inventory[i] = itemString
-			CharacterString = CharacterString..itemString.."."
+			CharacterString = CharacterString..itemString
 		else
 			_G.ArmoryPrefs[charUnique].inventory[i] = nil;
+		end
+		if (CharacterString ~= "") then
 			CharacterString = CharacterString.."."
 		end
 	end
-	CharacterString = string.sub(CharacterString,2,-1);
+	--CharacterString = string.sub(CharacterString,2,-1);
 	local ammoID, _ = GetInventoryItemID("player", 0)
 	if (ammoID > 0) then
 		_G.ArmoryPrefs[charUnique].inventory[0] = "item:"..ammoID
