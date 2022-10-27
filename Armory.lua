@@ -318,6 +318,7 @@ function Armory.GetCharData()
 			CharacterString = CharacterString..itemString
 		else
 			_G.ArmoryPrefs[charUnique].inventory[i] = nil;
+			CharacterString = CharacterString.."empty"
 		end
 		if (CharacterString ~= "") then
 			CharacterString = CharacterString.."."
