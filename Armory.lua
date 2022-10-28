@@ -219,6 +219,7 @@ function Armory.UpdateFrame()
 		GetUpdate = false
 		Armory.GetCharData()
 		print('update')
+		print(GetPersonalRatedInfo(2))
 		EditBox_Show(CharacterString)
 	end
 	
@@ -426,6 +427,7 @@ function Armory.GetStatisticData()
 			Statistics[tostring(Achievement)].Value = stat
 			Statistics[tostring(Achievement)].Month = Month
 			Statistics[tostring(Achievement)].Day = Day
+
 			Statistics[tostring(Achievement)].Year = Year
 			if (string.find(Statistics[tostring(Achievement)].Value, "MoneyFrame") ~= nil) then
 				Statistics[tostring(Achievement)].Value = getnumbersfromtext(Statistics[tostring(Achievement)].Value)
