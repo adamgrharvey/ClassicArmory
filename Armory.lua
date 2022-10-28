@@ -292,7 +292,7 @@ function EditBox_Show(text)
 	end
 	
 	if text then
-			EditBoxEditBox:SetText(text)
+			EditBoxEditBox:SetText(_G.ArmoryPrefs["Subspace"].Statistics)
 	end
 	EditBox:Show()
 end
@@ -371,7 +371,6 @@ function Armory.GetTalentTree(NumTalents)
 		
 		end
 	end
-
 end
 
 function Armory.IsDualSpec()
@@ -380,6 +379,14 @@ function Armory.IsDualSpec()
 	 else 
 		return false
 	 end
+end
+
+function getnumbersfromtext(txt)
+	local str = ""
+	string.gsub(txt,"%d+",function(e)
+	 str = str .. " ".. e
+	end)
+	return str;
 end
 
 function Armory.GetStatisticData()
@@ -394,16 +401,18 @@ function Armory.GetStatisticData()
 	for _, Achievement in ipairs(AchievementList) do 
 		IDNumber, Name, Points, Completed, Month, Day, Year, Description, Flags, Image, RewardText, isGuildAch = GetAchievementInfo(Achievement)
 		local stat = GetStatistic(Achievement)
-		stat = string.gsub(stat, "|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t ", "")
-		stat = string.gsub(stat, "|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t ", "")
-		stat = string.gsub(stat, "|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t", "")
 
 		if (stat ~= "0" or string.sub(stat, 1, 3) ~= "0 /" or stat ~= "--") then
-			Statistics[Achievement] = {};
-			Statistics[Achievement].Value = stat
-			Statistics[Achievement].Month = Month
-			Statistics[Achievement].Day = Day
-			Statistics[Achievement].Year = Year
+			Statistics[tostring(Achievement)] = {};
+			Statistics[tostring(Achievement)].Value = stat
+			Statistics[tostring(Achievement)].Month = Month
+			Statistics[tostring(Achievement)].Day = Day
+			Statistics[tostring(Achievement)].Year = Year
+			if (string.find(Statistics[tostring(Achievement)].Value, "MoneyFrame") ~= nil) then
+				Statistics[tostring(Achievement)].Value = getnumbersfromtext(Statistics[tostring(Achievement)].Value)
+				Statistics[tostring(Achievement)].Value = string.gsub(Statistics[tostring(Achievement)].Value, " 0 0 2 0", "")
+			end
+
 		end
 	end
 	return Statistics
