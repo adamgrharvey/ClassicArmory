@@ -301,6 +301,9 @@ function Armory.GetCharData()
 	local CharacterName = UnitName("player");
 	local CharacterRealm = GetRealmName();
 	local CharTitle = GetTitleName(GetCurrentTitle());
+	if (GetCurrentTitle() == -1) then
+		CharTitle = "null"
+	end
 	local AchievePts = GetTotalAchievementPoints();
 	local region = GetLocale();
 	local itemString = ""
