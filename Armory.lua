@@ -292,7 +292,7 @@ function EditBox_Show(text)
 	end
 	
 	if text then
-			EditBoxEditBox:SetText(_G.ArmoryPrefs["Subspace"].Statistics)
+			EditBoxEditBox:SetText(text)
 	end
 	EditBox:Show()
 end
@@ -324,6 +324,7 @@ function Armory.GetCharData()
 			CharacterString = CharacterString.."."
 		end
 	end
+	CharacterString = CharacterString.."!"
 	--CharacterString = string.sub(CharacterString,2,-1);
 	local ammoID, _ = GetInventoryItemID("player", 0)
 	if (ammoID > 0) then
@@ -402,7 +403,7 @@ function Armory.GetStatisticData()
 		IDNumber, Name, Points, Completed, Month, Day, Year, Description, Flags, Image, RewardText, isGuildAch = GetAchievementInfo(Achievement)
 		local stat = GetStatistic(Achievement)
 
-		if (stat ~= "0" or string.sub(stat, 1, 3) ~= "0 /" or stat ~= "--") then
+		if (stat ~= "0" and string.sub(stat, 1, 3) ~= "0 /" and stat ~= "--") then
 			Statistics[tostring(Achievement)] = {};
 			Statistics[tostring(Achievement)].Value = stat
 			Statistics[tostring(Achievement)].Month = Month
@@ -412,6 +413,7 @@ function Armory.GetStatisticData()
 				Statistics[tostring(Achievement)].Value = getnumbersfromtext(Statistics[tostring(Achievement)].Value)
 				Statistics[tostring(Achievement)].Value = string.gsub(Statistics[tostring(Achievement)].Value, " 0 0 2 0", "")
 			end
+			CharacterString = CharacterString .. string.format("%x", Achievement) .. ":" .. Statistics[tostring(Achievement)].Value .. "."
 
 		end
 	end
