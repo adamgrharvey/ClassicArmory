@@ -306,11 +306,12 @@ function Armory.GetCharData()
 	end
 	local AchievePts = GetTotalAchievementPoints();
 	local region = GetLocale();
+	local CharRace = UnitRace("player")
 	local itemString = ""
 	CharacterString = ""
 	local localizedClass, englishClass, classIndex = UnitClass("player");
 	region = string.sub(region,3,5)
-	local CharInfo = CharacterName .. "." .. CharacterRealm .. "." .. region .. "." .. CharTitle .. "." .. classIndex .. "." .. AchievePts
+	local CharInfo = CharacterName .. "." .. CharacterRealm .. "." .. region .. "." .. CharTitle .. "." .. classIndex .. "." .. AchievePts .."." .. CharRace
 	local charUnique = CharacterName.."-"..CharacterRealm;
 	_G.ArmoryPrefs[charUnique] = Character.new(CharacterName, CharacterRealm, region, classIndex);
 	for i = 1, 19, 1 do
