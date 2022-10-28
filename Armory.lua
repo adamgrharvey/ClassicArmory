@@ -300,11 +300,14 @@ end
 function Armory.GetCharData()
 	local CharacterName = UnitName("player");
 	local CharacterRealm = GetRealmName();
+	local CharTitle = GetTitleName(GetCurrentTitle());
+	local AchievePts = GetTotalAchievementPoints();
 	local region = GetLocale();
 	local itemString = ""
 	CharacterString = ""
 	local localizedClass, englishClass, classIndex = UnitClass("player");
 	region = string.sub(region,3,5)
+	local CharInfo = CharacterName .. "." .. CharacterRealm .. "." .. region .. "." .. CharTitle .. "." .. classIndex .. "." .. AchievePts
 	local charUnique = CharacterName.."-"..CharacterRealm;
 	_G.ArmoryPrefs[charUnique] = Character.new(CharacterName, CharacterRealm, region, classIndex);
 	for i = 1, 19, 1 do
@@ -324,7 +327,7 @@ function Armory.GetCharData()
 			CharacterString = CharacterString.."."
 		end
 	end
-	CharacterString = CharacterString.."!"
+	CharacterString = CharacterString.."!"..CharInfo.."!"
 	--CharacterString = string.sub(CharacterString,2,-1);
 	local ammoID, _ = GetInventoryItemID("player", 0)
 	if (ammoID > 0) then
