@@ -402,6 +402,17 @@ function Armory.GetStatisticData()
 	for _, Achievement in ipairs(AchievementList) do 
 		IDNumber, Name, Points, Completed, Month, Day, Year, Description, Flags, Image, RewardText, isGuildAch = GetAchievementInfo(Achievement)
 		local stat = GetStatistic(Achievement)
+		if (Day ~= nil) then
+			if (string.len(Day) < 2) then
+				Day = "0" .. Day
+			end
+			if (string.len(Month) < 2) then
+				Month = "0" .. Month
+			end
+			if (string.len(Year) < 2) then
+				Year = "0" .. Year
+			end
+		end
 
 		if (stat ~= "0" and string.sub(stat, 1, 3) ~= "0 /" and stat ~= "--") then
 			Statistics[tostring(Achievement)] = {};
@@ -413,7 +424,13 @@ function Armory.GetStatisticData()
 				Statistics[tostring(Achievement)].Value = getnumbersfromtext(Statistics[tostring(Achievement)].Value)
 				Statistics[tostring(Achievement)].Value = string.gsub(Statistics[tostring(Achievement)].Value, " 0 0 2 0", "")
 			end
-			CharacterString = CharacterString .. string.format("%x", Achievement) .. ":" .. Statistics[tostring(Achievement)].Value .. "."
+			CharacterString = CharacterString .. string.format("%x", Achievement) .. ":" .. Statistics[tostring(Achievement)].Value
+			if (Year ~= nil) then
+				CharacterString = CharacterString .. "_" .. Month .. Day .. Year
+			end
+			CharacterString = CharacterString .. "."
+
+			
 
 		end
 	end
