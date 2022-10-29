@@ -219,7 +219,9 @@ function Armory.UpdateFrame()
 		GetUpdate = false
 		Armory.GetCharData()
 		print('update')
-		print(GetPersonalRatedInfo(2))
+		print(GetAchievementInfo(363))
+		-- print(GetCategoryInfo(GetAchievementCategory(363)))
+		-- print(GetCategoryInfo(21))
 		EditBox_Show(CharacterString)
 	end
 	
@@ -323,16 +325,16 @@ function Armory.GetCharData()
 			itemString = string.gsub(itemString, "::", ":0:")
 			itemString = string.sub(itemString,6,-1)
 			_G.ArmoryPrefs[charUnique].inventory[i] = itemString
-			CharacterString = CharacterString..itemString
+			--CharacterString = CharacterString..itemString
 		else
 			_G.ArmoryPrefs[charUnique].inventory[i] = nil;
-			CharacterString = CharacterString.."empty"
+			--CharacterString = CharacterString.."empty"
 		end
 		if (CharacterString ~= "") then
-			CharacterString = CharacterString.."."
+			--CharacterString = CharacterString.."."
 		end
 	end
-	CharacterString = CharacterString.."!"..CharInfo.."!"
+	--CharacterString = CharacterString.."!"..CharInfo.."!"
 	--CharacterString = string.sub(CharacterString,2,-1);
 	local ammoID, _ = GetInventoryItemID("player", 0)
 	if (ammoID > 0) then
@@ -408,7 +410,21 @@ function Armory.GetStatisticData()
 	local Statistics = Statistics.new()
 
 	for _, Achievement in ipairs(AchievementList) do 
-		IDNumber, Name, Points, Completed, Month, Day, Year, Description, Flags, Image, RewardText, isGuildAch = GetAchievementInfo(Achievement)
+		IDNumber, Name, Points, Completed, Month, Day, Year, Description, Flags, Image, RewardText, isGuildAch, _, _, isStatistic = GetAchievementInfo(Achievement)
+		if (Description ~= nil) then
+			Name = string.gsub(Name, "\"", "\\\"")
+			Description = string.gsub(Description, "\"", "\\\"")
+		end
+		if (Achievement ~= nil) then
+			categoryID = GetAchievementCategory(Achievement)
+			if (categoryID ~= nil) then
+				categoryName, parentCategoryID = GetCategoryInfo(categoryID)
+				if (parentCategoryID ~= -1) then
+					parentCategoryName = GetCategoryInfo(parentCategoryID)
+				end
+			end
+		end
+
 		local stat = GetStatistic(Achievement)
 		if (Day ~= nil) then
 			if (string.len(Day) < 2) then
@@ -422,7 +438,7 @@ function Armory.GetStatisticData()
 			end
 		end
 
-		if (stat ~= "0" and string.sub(stat, 1, 3) ~= "0 /" and stat ~= "--") then
+		--if (stat ~= "0" and string.sub(stat, 1, 3) ~= "0 /" and stat ~= "--") then
 			Statistics[tostring(Achievement)] = {};
 			Statistics[tostring(Achievement)].Value = stat
 			Statistics[tostring(Achievement)].Month = Month
@@ -433,13 +449,58 @@ function Armory.GetStatisticData()
 				Statistics[tostring(Achievement)].Value = getnumbersfromtext(Statistics[tostring(Achievement)].Value)
 				Statistics[tostring(Achievement)].Value = string.gsub(Statistics[tostring(Achievement)].Value, " 0 0 2 0", "")
 			end
-			CharacterString = CharacterString .. string.format("%x", Achievement) .. ":" .. Statistics[tostring(Achievement)].Value
+			--CharacterString = CharacterString .. string.format("%x", Achievement) .. ":" .. Statistics[tostring(Achievement)].Value
 			if (Year ~= nil) then
-				CharacterString = CharacterString .. "_" .. Month .. Day .. Year
+				--CharacterString = CharacterString .. "_" .. Month .. Day .. Year
 			end
-			CharacterString = CharacterString .. "."
+			CharacterString = CharacterString .. "Statistic.create("
+			if (IDNumber ~= nil) then
+				CharacterString = CharacterString .. "stat_id: " .. IDNumber
 
-			
+				if (Name ~= nil) then
+					CharacterString = CharacterString .. ", name: \"" .. Name
+				else 
+					CharacterString = CharacterString .. ", name: nil"
+				end
+
+				if (Description ~= nil) then
+					CharacterString = CharacterString .. "\", description: \"" .. Description
+				else 
+					CharacterString = CharacterString .. "\", description: nil"
+				end
+
+				if (Points ~= nil) then
+					CharacterString = CharacterString .. "\", points: " .. Points
+				else 
+					CharacterString = CharacterString .. "\", points: nil"
+				end
+
+				if (isStatistic) then
+					CharacterString = CharacterString .. ", is_statistic: true"
+				else 
+					CharacterString = CharacterString .. ", is_statistic: false"
+				end
+
+				if (RewardText ~= nil) then
+					CharacterString = CharacterString .. ", reward_text: \"" .. RewardText
+				else 
+					CharacterString = CharacterString  .. ", reward_text: nil" 
+				end
+
+				if (categoryName ~= nil) then
+					CharacterString = CharacterString .. "\", sub_category: \"" .. categoryName
+				else 
+					CharacterString = CharacterString  .. "\", sub_category: nil" 
+				end
+
+				if (parentCategoryID ~= -1 and parentCategoryName ~= nil) then
+					CharacterString = CharacterString .. "\", category: \"" .. parentCategoryName .. "\""
+				else 
+					CharacterString = CharacterString  .. "\", category: nil" 
+				end
+				CharacterString = CharacterString .. ")"
+				CharacterString = CharacterString .. "$"
+			--end
 
 		end
 	end
