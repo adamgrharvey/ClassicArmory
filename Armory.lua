@@ -411,6 +411,7 @@ function Armory.GetStatisticData()
 	for _, Achievement in ipairs(AchievementList) do 
 		IDNumber, Name, Points, Completed, Month, Day, Year, Description, Flags, Image, RewardText, isGuildAch = GetAchievementInfo(Achievement)
 		local stat = GetStatistic(Achievement)
+
 		if (Completed == true) then
 			stat = "1"
 		end
