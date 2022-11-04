@@ -218,8 +218,8 @@ function Armory.UpdateFrame()
 	if (GetUpdate == true) then
 		GetUpdate = false
 		Armory.GetCharData()
-		print('update')
-		print(GetPersonalRatedInfo(2))
+		--print('update')
+		--print(GetPersonalRatedInfo(2))
 		EditBox_Show(CharacterString)
 	end
 	
@@ -411,6 +411,9 @@ function Armory.GetStatisticData()
 	for _, Achievement in ipairs(AchievementList) do 
 		IDNumber, Name, Points, Completed, Month, Day, Year, Description, Flags, Image, RewardText, isGuildAch = GetAchievementInfo(Achievement)
 		local stat = GetStatistic(Achievement)
+		if (Completed == true) then
+			stat = "1"
+		end
 		if (Day ~= nil) then
 			if (string.len(Day) < 2) then
 				Day = "0" .. Day
@@ -421,6 +424,7 @@ function Armory.GetStatisticData()
 			if (string.len(Year) < 2) then
 				Year = "0" .. Year
 			end
+			Year = "20" .. Year
 		end
 
 		if (stat ~= "0" and string.sub(stat, 1, 3) ~= "0 /" and stat ~= "--") then
@@ -436,7 +440,7 @@ function Armory.GetStatisticData()
 			end
 			CharacterString = CharacterString .. string.format("%x", Achievement) .. ":" .. Statistics[tostring(Achievement)].Value
 			if (Year ~= nil) then
-				CharacterString = CharacterString .. "_" .. Month .. Day .. Year
+				CharacterString = CharacterString .. "_" .. Year .. Month .. Day
 			end
 			CharacterString = CharacterString .. "."
 
