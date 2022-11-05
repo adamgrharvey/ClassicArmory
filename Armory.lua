@@ -411,6 +411,17 @@ function Armory.GetStatisticData()
 
 	for _, Achievement in ipairs(AchievementList) do 
 		IDNumber, Name, Points, Completed, Month, Day, Year, Description, Flags, Image, RewardText, isGuildAch, _, _, isStatistic = GetAchievementInfo(Achievement)
+		numCriteria = GetAchievementNumCriteria(Achievement)
+		
+		if (numCriteria > 1) then
+			_, criteriaType, _, _, _, _, _, assetID = GetAchievementCriteriaInfo(IDNumber, 1)
+			criteriaString = assetID
+			for i = 2, numCriteria do
+			_, _, _, _, _, _, _, assetID = GetAchievementCriteriaInfo(IDNumber, i)
+			criteriaString = criteriaString .. ":" .. assetID
+			end
+		end
+		
 		if (Description ~= nil) then
 			Name = string.gsub(Name, "\"", "\\\"")
 			Description = string.gsub(Description, "\"", "\\\"")
@@ -424,6 +435,7 @@ function Armory.GetStatisticData()
 				end
 			end
 		end
+
 
 		local stat = GetStatistic(Achievement)
 		if (Day ~= nil) then
@@ -455,7 +467,7 @@ function Armory.GetStatisticData()
 			end
 			CharacterString = CharacterString .. "Statistic.create("
 			if (IDNumber ~= nil) then
-				CharacterString = CharacterString .. "stat_id: " .. IDNumber
+				CharacterString = CharacterString .. "id: " .. IDNumber
 
 				if (Name ~= nil) then
 					CharacterString = CharacterString .. ", name: \"" .. Name
@@ -498,11 +510,24 @@ function Armory.GetStatisticData()
 				else 
 					CharacterString = CharacterString  .. "\", category: nil" 
 				end
+
+				if (criteriaString ~= nil) then
+					CharacterString = CharacterString .. ", criteria_type: " .. criteriaType
+				else 
+					CharacterString = CharacterString  .. ", criteria_type: nil" 
+				end
+
+				if (criteriaString ~= nil) then
+					CharacterString = CharacterString .. ", criteria_string: \"" .. criteriaString .. "\""
+				else 
+					CharacterString = CharacterString  .. ", criteria_string: nil"
+				end
 				CharacterString = CharacterString .. ")"
 				CharacterString = CharacterString .. "$"
 			--end
 
 		end
+		criteriaString = nil;
 	end
 	return Statistics
 end
