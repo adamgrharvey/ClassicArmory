@@ -413,13 +413,28 @@ function Armory.GetStatisticData()
 		IDNumber, Name, Points, Completed, Month, Day, Year, Description, Flags, Image, RewardText, isGuildAch, _, _, isStatistic = GetAchievementInfo(Achievement)
 		numCriteria = GetAchievementNumCriteria(Achievement)
 		
-		if (numCriteria > 1) then
-			_, criteriaType, _, _, _, _, _, assetID = GetAchievementCriteriaInfo(IDNumber, 1)
-			criteriaString = assetID
-			for i = 2, numCriteria do
-			_, _, _, _, _, _, _, assetID = GetAchievementCriteriaInfo(IDNumber, i)
-			criteriaString = criteriaString .. ":" .. assetID
+		if (numCriteria > 0) then
+			criteriaName, criteriaType, _, quantity, reqQuantity, _, _, assetID = GetAchievementCriteriaInfo(IDNumber, 1)
+
+			if (criteriaType ~= 8 and criteriaType ~= 11) then
+				criteriaString = criteriaName
+			elseif (criteriaType == 11 or criteriaType == 47) then
+			criteriaString = reqQuantity
+			else
+				criteriaString = assetID
 			end
+			for i = 2, numCriteria do
+				criteriaName, _, _, _, _, _, _, assetID = GetAchievementCriteriaInfo(IDNumber, i)
+				if (criteriaType ~= 8 and criteriaType ~= 11) then
+					criteriaString = criteriaString .. ":" .. criteriaName
+				elseif (criteriaType == 11) then
+					criteriaString = criteriaString .. ":" .. reqQuantity
+				else
+					criteriaString = criteriaString .. ":" .. assetID
+			end
+			
+			end
+
 		end
 		
 		if (Description ~= nil) then
@@ -465,59 +480,60 @@ function Armory.GetStatisticData()
 			if (Year ~= nil) then
 				--CharacterString = CharacterString .. "_" .. Month .. Day .. Year
 			end
-			CharacterString = CharacterString .. "Statistic.create("
-			if (IDNumber ~= nil) then
-				CharacterString = CharacterString .. "id: " .. IDNumber
+			CharacterString = CharacterString .. "stat" .. tostring(IDNumber) .. ".update("
+			-- CharacterString = CharacterString .. "Statistic.create("
+			 if (IDNumber ~= nil) then
+			-- 	CharacterString = CharacterString .. "id: " .. IDNumber
 
-				if (Name ~= nil) then
-					CharacterString = CharacterString .. ", name: \"" .. Name
+			-- 	if (Name ~= nil) then
+			-- 		CharacterString = CharacterString .. ", name: \"" .. Name
+			-- 	else 
+			-- 		CharacterString = CharacterString .. ", name: nil"
+			-- 	end
+
+			-- 	if (Description ~= nil) then
+			-- 		CharacterString = CharacterString .. "\", description: \"" .. Description
+			-- 	else 
+			-- 		CharacterString = CharacterString .. "\", description: nil"
+			-- 	end
+
+			-- 	if (Points ~= nil) then
+			-- 		CharacterString = CharacterString .. "\", points: " .. Points
+			-- 	else 
+			-- 		CharacterString = CharacterString .. "\", points: nil"
+			-- 	end
+
+			-- 	if (isStatistic) then
+			-- 		CharacterString = CharacterString .. ", is_statistic: true"
+			-- 	else 
+			-- 		CharacterString = CharacterString .. ", is_statistic: false"
+			-- 	end
+
+			-- 	if (RewardText ~= nil) then
+			-- 		CharacterString = CharacterString .. ", reward_text: \"" .. RewardText
+			-- 	else 
+			-- 		CharacterString = CharacterString  .. ", reward_text: nil" 
+			-- 	end
+
+			-- 	if (categoryName ~= nil) then
+			-- 		CharacterString = CharacterString .. "\", sub_category: \"" .. categoryName
+			-- 	else 
+			-- 		CharacterString = CharacterString  .. "\", sub_category: nil" 
+			-- 	end
+
+			-- 	if (parentCategoryID ~= -1 and parentCategoryName ~= nil) then
+			-- 		CharacterString = CharacterString .. "\", category: \"" .. parentCategoryName .. "\""
+			-- 	else 
+			-- 		CharacterString = CharacterString  .. "\", category: nil" 
+			-- 	end
+
+				if (criteriaString ~= nil and isStatistic == false and criteria_type ~= 46 and criteria_type ~= 14 and criteria_type ~= 9) then
+					CharacterString = CharacterString .. "criteria_type: " .. criteriaType
 				else 
-					CharacterString = CharacterString .. ", name: nil"
+					CharacterString = CharacterString  .. "criteria_type: nil" 
 				end
 
-				if (Description ~= nil) then
-					CharacterString = CharacterString .. "\", description: \"" .. Description
-				else 
-					CharacterString = CharacterString .. "\", description: nil"
-				end
-
-				if (Points ~= nil) then
-					CharacterString = CharacterString .. "\", points: " .. Points
-				else 
-					CharacterString = CharacterString .. "\", points: nil"
-				end
-
-				if (isStatistic) then
-					CharacterString = CharacterString .. ", is_statistic: true"
-				else 
-					CharacterString = CharacterString .. ", is_statistic: false"
-				end
-
-				if (RewardText ~= nil) then
-					CharacterString = CharacterString .. ", reward_text: \"" .. RewardText
-				else 
-					CharacterString = CharacterString  .. ", reward_text: nil" 
-				end
-
-				if (categoryName ~= nil) then
-					CharacterString = CharacterString .. "\", sub_category: \"" .. categoryName
-				else 
-					CharacterString = CharacterString  .. "\", sub_category: nil" 
-				end
-
-				if (parentCategoryID ~= -1 and parentCategoryName ~= nil) then
-					CharacterString = CharacterString .. "\", category: \"" .. parentCategoryName .. "\""
-				else 
-					CharacterString = CharacterString  .. "\", category: nil" 
-				end
-
-				if (criteriaString ~= nil) then
-					CharacterString = CharacterString .. ", criteria_type: " .. criteriaType
-				else 
-					CharacterString = CharacterString  .. ", criteria_type: nil" 
-				end
-
-				if (criteriaString ~= nil) then
+				if (criteriaString ~= nil and isStatistic == false and criteria_type ~= 46 and criteria_type ~= 14 and criteria_type ~= 9) then
 					CharacterString = CharacterString .. ", criteria_string: \"" .. criteriaString .. "\""
 				else 
 					CharacterString = CharacterString  .. ", criteria_string: nil"
