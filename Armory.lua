@@ -219,7 +219,7 @@ function Armory.UpdateFrame()
 		GetUpdate = false
 		Armory.GetCharData()
 		--print('update')
-		--print(GetPersonalRatedInfo(2))
+		print(IsAchievementEligible(614))
 		EditBox_Show(CharacterString)
 	end
 	
