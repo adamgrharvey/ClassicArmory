@@ -218,8 +218,16 @@ function Armory.UpdateFrame()
 	if (GetUpdate == true) then
 		GetUpdate = false
 		Armory.GetCharData()
-		--print('update')
-		print(IsAchievementEligible(614))
+		for i=1, 6 do
+			glyphLink = GetGlyphLink(i)
+			print(glyphLink)
+			enabled, glyphType, glyphTooltipIndex, glyphSpellID, icon = GetGlyphSocketInfo(i);
+			glyphString = gsub(glyphLink, "\124", ":")
+			glyphString = gsub(glyphString, ":cff66bbff:Hglyph:2", "")
+			glyphString = strsub(glyphString, 1, 5)
+			print(glyphString)
+			
+		end
 		EditBox_Show(CharacterString)
 	end
 	
@@ -363,7 +371,6 @@ function Armory.GetCharData()
 			end
 		end
 	CharacterString = CharacterString..talentString.."!"
-	print(talentString);
 	end
 	CharacterString = CharacterString..tostring(GetActiveTalentGroup()).."!"
 	--CharacterString = string.sub(CharacterString,2,-1);
@@ -450,10 +457,6 @@ function Armory.GetStatisticData()
 	for _, Achievement in ipairs(AchievementList) do 
 		IDNumber, Name, Points, Completed, Month, Day, Year, Description, Flags, Image, RewardText, isGuildAch = GetAchievementInfo(Achievement)
 		local stat = GetStatistic(Achievement)
-
-		if (Achievement == 4784 or Achievement == 4785) then
-			print(GetAchievementInfo(Achievement))
-		end
 
 		if (Completed == true) then
 			stat = "1"
