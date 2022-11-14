@@ -370,6 +370,21 @@ function Armory.GetCharData()
 				talentString = talentString .. "-" .. specString
 			end
 		end
+		
+		for i=1, 6 do
+			talentString = talentString.."."
+			glyphLink = GetGlyphLink(i, s)
+			if (glyphLink ~= nil) then
+				glyphString = gsub(glyphLink, "\124", ":")
+				glyphString = gsub(glyphString, ":cff66bbff:Hglyph:2", "")
+				glyphString = strsub(glyphString, 1, 5)
+				talentString = talentString..glyphString
+				glyphLink = nil;
+			end
+
+			--print(glyphString)
+			
+		end
 	CharacterString = CharacterString..talentString.."!"
 	end
 	CharacterString = CharacterString..tostring(GetActiveTalentGroup()).."!"
