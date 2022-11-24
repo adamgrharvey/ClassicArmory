@@ -401,6 +401,7 @@ function Armory.GetCharData()
 		_G.ArmoryPrefs[charUnique].inventory[0] = nil
 	end
 _G.ArmoryPrefs[charUnique].Statistics = Armory.GetStatisticData()
+_G.ArmoryPrefs[charUnique].PvP = Armory.GetPvPData()
 _G.ArmoryPrefs[charUnique].CharacterString = CharacterString
 _G.ArmoryPrefs[charUnique].RecentStats = { GetLatestUpdatedStats() }
 _G.ArmoryPrefs[charUnique].RecentAchieves = { GetLatestCompletedAchievements() }
