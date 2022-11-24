@@ -309,42 +309,8 @@ function Armory.GetPvPData()
 
 end
 
-function Armory.GetCharData()
-	local CharacterName = UnitName("player");
-	local CharacterRealm = GetRealmName();
-	local CharTitle = GetTitleName(GetCurrentTitle());
-	if (GetCurrentTitle() == -1) then
-		CharTitle = "null"
-	end
-	local AchievePts = GetTotalAchievementPoints();
-	local region = GetLocale();
-	local CharRace = UnitRace("player")
-	local CharLevel = UnitLevel("player")
-	local itemString = ""
-	CharacterString = ""
-	local localizedClass, englishClass, classIndex = UnitClass("player");
-	region = string.sub(region,3,5)
-	local CharInfo = CharacterName .. "." .. CharacterRealm .. "." .. region .. "." .. CharTitle .. "." .. classIndex .. "." .. AchievePts .."." .. CharRace .. "." .. CharLevel
-	local charUnique = CharacterName.."-"..CharacterRealm;
-	_G.ArmoryPrefs[charUnique] = Character.new(CharacterName, CharacterRealm, region, classIndex);
-	for i = 1, 19, 1 do
-		if (GetInventoryItemLink("player", i)) then
-			local a, itemLink = GetItemInfo(GetInventoryItemLink("player", i))
-			itemString = string.match(itemLink, "item[%-?%d:]+")
-			itemString = string.gsub(itemString, "::", ":0:")
-			itemString = string.gsub(itemString, "::", ":0:")
-			itemString = string.sub(itemString,6,-1)
-			_G.ArmoryPrefs[charUnique].inventory[i] = itemString
-			CharacterString = CharacterString..itemString
-		else
-			_G.ArmoryPrefs[charUnique].inventory[i] = nil;
-			CharacterString = CharacterString.."empty"
-		end
-		if (CharacterString ~= "") then
-			CharacterString = CharacterString.."."
-		end
-	end
-	CharacterString = CharacterString.."!"..CharInfo.."!"
+function Armory.GetSpecData()
+	local outString = "";
 	for s = 1, 2 do
 		local talentString = ""
 		for i = 1, GetNumTalentTabs() do
@@ -386,10 +352,52 @@ function Armory.GetCharData()
 			end
 
 			--print(glyphString)
-			
 		end
-	CharacterString = CharacterString..talentString.."!"
+		talentString = talentString .. "!"
+		outString = outString .. talentString
 	end
+	return outString
+end
+
+function Armory.GetCharData()
+	local CharacterName = UnitName("player");
+	local CharacterRealm = GetRealmName();
+	local CharTitle = GetTitleName(GetCurrentTitle());
+	if (GetCurrentTitle() == -1) then
+		CharTitle = "null"
+	end
+	local AchievePts = GetTotalAchievementPoints();
+	local region = GetLocale();
+	local CharRace = UnitRace("player")
+	local CharLevel = UnitLevel("player")
+	local itemString = ""
+	CharacterString = ""
+	local localizedClass, englishClass, classIndex = UnitClass("player");
+	region = string.sub(region,3,5)
+	local CharInfo = CharacterName .. "." .. CharacterRealm .. "." .. region .. "." .. CharTitle .. "." .. classIndex .. "." .. AchievePts .."." .. CharRace .. "." .. CharLevel
+	local charUnique = CharacterName.."-"..CharacterRealm;
+	_G.ArmoryPrefs[charUnique] = Character.new(CharacterName, CharacterRealm, region, classIndex);
+	for i = 1, 19, 1 do
+		if (GetInventoryItemLink("player", i)) then
+			local a, itemLink = GetItemInfo(GetInventoryItemLink("player", i))
+			itemString = string.match(itemLink, "item[%-?%d:]+")
+			itemString = string.gsub(itemString, "::", ":0:")
+			itemString = string.gsub(itemString, "::", ":0:")
+			itemString = string.sub(itemString,6,-1)
+			_G.ArmoryPrefs[charUnique].inventory[i] = itemString
+			CharacterString = CharacterString..itemString
+		else
+			_G.ArmoryPrefs[charUnique].inventory[i] = nil;
+			CharacterString = CharacterString.."empty"
+		end
+		if (CharacterString ~= "") then
+			CharacterString = CharacterString.."."
+		end
+	end
+	CharacterString = CharacterString.."!"..CharInfo.."!"
+
+
+	CharacterString = CharacterString..Armory.GetSpecData()
 	CharacterString = CharacterString..tostring(GetActiveTalentGroup()).."!"
 	-- PVP DATA
 	CharacterString = CharacterString .. Armory.GetPvPData() .. "!"
