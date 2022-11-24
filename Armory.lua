@@ -218,16 +218,8 @@ function Armory.UpdateFrame()
 	if (GetUpdate == true) then
 		GetUpdate = false
 		Armory.GetCharData()
-		for i=1, 6 do
-			glyphLink = GetGlyphLink(i)
-			print(glyphLink)
-			enabled, glyphType, glyphTooltipIndex, glyphSpellID, icon = GetGlyphSocketInfo(i);
-			glyphString = gsub(glyphLink, "\124", ":")
-			glyphString = gsub(glyphString, ":cff66bbff:Hglyph:2", "")
-			glyphString = strsub(glyphString, 1, 5)
-			print(glyphString)
-			
-		end
+		print(GetPersonalRatedInfo(1))
+		print(Armory.GetPvPData())
 		EditBox_Show(CharacterString)
 	end
 	
@@ -304,6 +296,17 @@ function EditBox_Show(text)
 			EditBoxEditBox:SetText(text)
 	end
 	EditBox:Show()
+end
+
+function Armory.GetPvPData()
+	local PvPString = ""
+	for i = 1, 3, 1 do
+		local rating, _, _, seasonPlayed, seasonWon = GetPersonalRatedInfo(i)
+		PvPString = PvPString .. string.format("%x", rating) .. "." .. string.format("%x", seasonPlayed) .. "." ..string.format("%x", seasonWon) .. ":"
+	end
+	PvPString = string.sub(PvPString, 1, -2)
+	return PvPString
+
 end
 
 function Armory.GetCharData()
