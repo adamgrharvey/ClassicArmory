@@ -391,6 +391,8 @@ function Armory.GetCharData()
 	CharacterString = CharacterString..talentString.."!"
 	end
 	CharacterString = CharacterString..tostring(GetActiveTalentGroup()).."!"
+	-- PVP DATA
+	CharacterString = CharacterString .. Armory.GetPvPData() .. "!"
 	--CharacterString = string.sub(CharacterString,2,-1);
 	local ammoID, _ = GetInventoryItemID("player", 0)
 	if (ammoID > 0) then
