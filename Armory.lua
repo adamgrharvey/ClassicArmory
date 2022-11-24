@@ -408,44 +408,39 @@ function Armory.GetCharData()
 	else
 		_G.ArmoryPrefs[charUnique].inventory[0] = nil
 	end
-_G.ArmoryPrefs[charUnique].Statistics = Armory.GetStatisticData()
-_G.ArmoryPrefs[charUnique].PvP = Armory.GetPvPData()
-_G.ArmoryPrefs[charUnique].CharacterString = CharacterString
-_G.ArmoryPrefs[charUnique].RecentStats = { GetLatestUpdatedStats() }
-_G.ArmoryPrefs[charUnique].RecentAchieves = { GetLatestCompletedAchievements() }
-_G.ArmoryPrefs[charUnique].Specialization = {Primary = "", Secondary = ""}
-_G.ArmoryPrefs[charUnique].Talents = {"tab1", "tab2", "tab3"}
-_G.ArmoryPrefs[charUnique].Talents["tab1"] = {ID = 1}
-_G.ArmoryPrefs[charUnique].Talents["tab2"] = {ID = 2}
-_G.ArmoryPrefs[charUnique].Talents["tab3"] = {ID = 3}
-_G.ArmoryPrefs[charUnique].Talents["tab1"].Count = GetNumTalents(1)
-_G.ArmoryPrefs[charUnique].Talents["tab2"].Count = GetNumTalents(2)
-_G.ArmoryPrefs[charUnique].Talents["tab3"].Count = GetNumTalents(3)
-local numTabs = GetNumTalentTabs();
-
-
-
-for s=1, 2 do
-	for t=1, numTabs do
-    local numTalents = GetNumTalents(t);
-		if s == 1 then
-			_G.ArmoryPrefs[charUnique].Specialization.Primary = _G.ArmoryPrefs[charUnique].Specialization.Primary..':';
-		else 
-			_G.ArmoryPrefs[charUnique].Specialization.Secondary = _G.ArmoryPrefs[charUnique].Specialization.Secondary..':';
-		end
-    for i=1, numTalents do
-        nameTalent, icon, tier, col, currRank, maxRank = GetTalentInfo(t,i,false,false,s);
+	_G.ArmoryPrefs[charUnique].Statistics = Armory.GetStatisticData()
+	_G.ArmoryPrefs[charUnique].PvP = Armory.GetPvPData()
+	_G.ArmoryPrefs[charUnique].CharacterString = CharacterString
+	_G.ArmoryPrefs[charUnique].RecentStats = { GetLatestUpdatedStats() }
+	_G.ArmoryPrefs[charUnique].RecentAchieves = { GetLatestCompletedAchievements() }
+	_G.ArmoryPrefs[charUnique].Specialization = {Primary = "", Secondary = ""}
+	_G.ArmoryPrefs[charUnique].Talents = {"tab1", "tab2", "tab3"}
+	_G.ArmoryPrefs[charUnique].Talents["tab1"] = {ID = 1}
+	_G.ArmoryPrefs[charUnique].Talents["tab2"] = {ID = 2}
+	_G.ArmoryPrefs[charUnique].Talents["tab3"] = {ID = 3}
+	_G.ArmoryPrefs[charUnique].Talents["tab1"].Count = GetNumTalents(1)
+	_G.ArmoryPrefs[charUnique].Talents["tab2"].Count = GetNumTalents(2)
+	_G.ArmoryPrefs[charUnique].Talents["tab3"].Count = GetNumTalents(3)
+	
+	local numTabs = GetNumTalentTabs();
+	for s=1, 2 do
+		for t=1, numTabs do
+	    local numTalents = GetNumTalents(t);
+			if s == 1 then
+				_G.ArmoryPrefs[charUnique].Specialization.Primary = _G.ArmoryPrefs[charUnique].Specialization.Primary..':';
+			else 
+				_G.ArmoryPrefs[charUnique].Specialization.Secondary = _G.ArmoryPrefs[charUnique].Specialization.Secondary..':';
+			end
+	    for i=1, numTalents do
+	      nameTalent, icon, tier, col, currRank, maxRank = GetTalentInfo(t,i,false,false,s);
 				if s == 1 then
 					_G.ArmoryPrefs[charUnique].Specialization.Primary = _G.ArmoryPrefs[charUnique].Specialization.Primary..currRank;
 				else 
 					_G.ArmoryPrefs[charUnique].Specialization.Secondary = _G.ArmoryPrefs[charUnique].Specialization.Secondary..currRank;
 				end
-        
-    end
+	    end
+		end
 	end
-end
-
-
 end
 
 function Armory.GetTalentTree(NumTalents)
