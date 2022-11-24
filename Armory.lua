@@ -218,8 +218,8 @@ function Armory.UpdateFrame()
 	if (GetUpdate == true) then
 		GetUpdate = false
 		Armory.GetCharData()
-		print(GetPersonalRatedInfo(1))
-		print(Armory.GetPvPData())
+		--print(GetPersonalRatedInfo(1))
+		--print(Armory.GetPvPData())
 		EditBox_Show(CharacterString)
 	end
 	
@@ -421,7 +421,7 @@ function Armory.GetCharData()
 	_G.ArmoryPrefs[charUnique].Talents["tab1"].Count = GetNumTalents(1)
 	_G.ArmoryPrefs[charUnique].Talents["tab2"].Count = GetNumTalents(2)
 	_G.ArmoryPrefs[charUnique].Talents["tab3"].Count = GetNumTalents(3)
-	
+
 	local numTabs = GetNumTalentTabs();
 	for s=1, 2 do
 		for t=1, numTabs do
