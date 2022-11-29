@@ -214,6 +214,7 @@ end
 
 SLASH_HELLOWORLD1, SLASH_HELLOWORLD2 = '/armory', '/armoury'; -- 3.
 function SlashCmdList.HELLOWORLD(msg, editbox) -- 4.
+	-- very round about way of getting PVP data
 	TogglePVPFrame();
 	TogglePVPFrame();
   GetUpdate = true;
