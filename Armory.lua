@@ -94,7 +94,7 @@ function Armory.OnReady()
 		end
 	end
 
-	print("Armory Loaded: use \"/armory\" to show the String window.")
+	print("Armory Loaded: use \"/armory\" to show the window.")
 	--Armory.CreateUIFrame();
 	
 end
