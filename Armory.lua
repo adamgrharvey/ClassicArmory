@@ -94,7 +94,8 @@ function Armory.OnReady()
 		end
 	end
 
-	Armory.CreateUIFrame();
+	print("Armory Loaded: use \"/armory\" to show the String window.")
+	--Armory.CreateUIFrame();
 	
 end
 
@@ -211,6 +212,11 @@ function Armory.OnClick(self, aButton)
 	end
 end
 
+SLASH_HELLOWORLD1, SLASH_HELLOWORLD2 = '/armory', '/armoury'; -- 3.
+function SlashCmdList.HELLOWORLD(msg, editbox) -- 4.
+ GetUpdate = true;
+end
+
 function Armory.UpdateFrame()
 
 	-- update the main frame state here
@@ -223,7 +229,7 @@ function Armory.UpdateFrame()
 		EditBox_Show(CharacterString)
 	end
 	
-	Armory.Label:SetText("click me!");
+	Armory.Label:SetText("asdf");
 end
 
 function EditBox_Show(text)
