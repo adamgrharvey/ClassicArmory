@@ -214,7 +214,9 @@ end
 
 SLASH_HELLOWORLD1, SLASH_HELLOWORLD2 = '/armory', '/armoury'; -- 3.
 function SlashCmdList.HELLOWORLD(msg, editbox) -- 4.
- GetUpdate = true;
+	TogglePVPFrame();
+	TogglePVPFrame();
+  GetUpdate = true;
 end
 
 function Armory.UpdateFrame()
@@ -229,7 +231,7 @@ function Armory.UpdateFrame()
 		EditBox_Show(CharacterString)
 	end
 	
-	Armory.Label:SetText("asdf");
+	--Armory.Label:SetText("asdf");
 end
 
 function EditBox_Show(text)
