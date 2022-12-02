@@ -208,7 +208,6 @@ end
 function Armory.OnClick(self, aButton)
 	if (aButton == "RightButton") then
 		GetUpdate = true;
-		
 	end
 end
 
