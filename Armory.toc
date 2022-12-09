@@ -1,7 +1,7 @@
 ## Interface: 30400
 ## Title : Armory
 ## Notes: Solution to the lack of an official Armory
-## Author: Adam Harvey (Subspace-Faerlina)
+## Author: Subspace-Faerlina
 ## Version: 1.0
 ## Dependencies: 
 ## SavedVariables: ArmoryPrefs
